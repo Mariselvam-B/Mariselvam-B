@@ -9,7 +9,8 @@
 </head>
 <body>
   <script>
-    var items=document.getElementsByClassName("list-group-item")
+    var items=document.getElementsByClassName("list-group-item");
+    const nodes = document.getElementsByTagName("h1");
   </script>
   <header id="main-header" class="bg-success text-white p-4 mb-3">
     <div class="container">
