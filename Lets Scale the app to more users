@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+    <script src="h.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <h1>Appointment Booking App</h1>
+    <form action="#">
+      <input type="text" id="name"/>
+      <input type="text" id="email"/>
+      <input type="submit" id="submit" value="Submit" />
+    </form>
+    <ul id="listOfPeople"></ul>
+  </body>
+
+</html>
