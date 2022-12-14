@@ -1,0 +1,21 @@
+var student = {age:20};
+var Arr =[1,2,3];
+
+function s (a,b,c){
+  return this.age+a+b+c ;
+}
+
+function d (j){
+  if (j=="jack"){
+  return this.age
+  }
+}
+
+var bind = s.bind(student);
+var v=bind(1,2,3);
+
+console.log(s.call(student,1,2,3));
+console.log(s.apply(student,Arr));
+console.log(v)
+
+console.log(d.call(student,"jack"));
