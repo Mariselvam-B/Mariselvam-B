@@ -1,0 +1,302 @@
+html
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+   
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <div class="sub-container">
+          
+          
+          <div class="user-amount-container">
+            <h3>Enter Expenses</h3>
+            <p class="hide error" id="product-title-error">
+              Values cannot be empty
+            </p>
+            <input
+              type="text"
+              class="product-title"
+              id="product-title"
+              placeholder="Enter Title of Product"
+            />
+            <input
+              type="number"
+              id="user-amount"
+              placeholder="Enter Cost of Product"
+            />
+            <button class="submit" id="add-expenses">Add</button>
+          </div>
+        </div>
+       
+        <div class="output-container flex-space">
+            <div class="totalExpenses">
+                <p>Total Expenses For Today</p>
+                <span id="expenditure-value">0</span>
+            </div>
+            
+          
+        </div>
+      </div>
+     
+      <div class="list">
+        <h3>Expenses</h3>
+        <div class="list-container" id="list"></div>
+      </div>
+    </div>
+    
+    <script src="script.js"></script>
+  </body>
+</html>
+
+css
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  body {
+    background-color: #f7f9fd;
+  }
+  .wrapper {
+    width: 90%;
+    font-size: 16px;
+    max-width: 43.75em;
+    margin: 1em auto;
+  }
+  .container {
+    width: 100%;
+  }
+  .sub-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3em;
+  }
+  .flex {
+    display: flex;
+    align-items: center;
+  }
+  .flex-space {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .wrapper h3 {
+    color: #363d55;
+    font-weight: 500;
+    margin-bottom: 0.6em;
+  }
+  .container input {
+    display: block;
+    width: 100%;
+    padding: 0.6em 0.3em;
+    border: 1px solid #d0d0d0;
+    border-radius: 0.3em;
+    color: #414a67;
+    outline: none;
+    font-weight: 400;
+    margin-bottom: 0.6em;
+  }
+  .container input:focus {
+    border-color: #018786;
+  }
+  
+  .user-amount-container {
+    background-color: #ffffff;
+    padding: 1.25em 0.9em;
+    border-radius: 0.3em;
+    box-shadow: 0 0.6em 1.2em rgba(28, 0, 80, 0.06);
+    width: 700px;
+    
+  }
+  .output-container {
+    background-color: #018786;
+    color: #ffffff;
+    border-radius: 0.3em;
+    box-shadow: 0 0.6em 1.2em rgba(28, 0, 80, 0.06);
+    margin: 2em 0;
+    padding: 1.2em;
+  }
+  .output-container p {
+    font-weight: 500;
+    margin-bottom: 0.6em;
+  }
+  .totalExpenses{
+    text-align: center;
+    flex: auto;
+  }
+  .output-container span {
+    display: block;
+    text-align: center;
+    font-weight: 400;
+    color: #e5e5e5;
+  }
+  .submit {
+    font-size: 1em;
+    margin-top: 0.8em;
+    background-color: #018786;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    padding: 0.6em 1.2em;
+    border-radius: 0.3em;
+    cursor: pointer;
+  }
+  .list {
+    background-color: #ffffff;
+    padding: 1.8em 1.2em;
+    box-shadow: 0 0.6em 1.2em rgba(28, 0, 80, 0.06);
+    border-radius: 0.6em;
+  }
+  .sublist-content {
+    width: 100%;
+    border-left: 0.3em solid #018786;
+    margin-bottom: 0.6em;
+    padding: 0.5em 1em;
+    display: grid;
+    grid-template-columns: 3fr 2fr 1fr 1fr;
+  }
+  .product {
+    font-weight: 500;
+    color: #363d55;
+  }
+  .amount {
+    color: #414a67;
+    margin-left: 20%;
+  }
+  .icons-container {
+    width: 5em;
+    margin: 1.2em;
+    align-items: center;
+  }
+  .product-title {
+    margin-bottom: 1em;
+  }
+  .hide {
+    display: none;
+  }
+  .error {
+    color: #ff465a;
+  }
+  .edit {
+    margin-left: auto;
+  }
+  .edit,
+  .delete {
+    background: transparent;
+    cursor: pointer;
+    margin-right: 1.5em;
+    border: none;
+    color: #018786;
+  }
+  @media screen and (max-width: 600px) {
+    .wrapper {
+      font-size: 14px;
+    }
+    .sub-container {
+      grid-template-columns: 1fr;
+      gap: 1em;
+    }
+  }
+
+javascript
+
+let userAmount = document.getElementById("user-amount");
+const addExpensesButton = document.getElementById("add-expenses");
+const productTitle = document.getElementById("product-title");
+const errorMessage = document.getElementById("budget-error");
+const productTitleError = document.getElementById("product-title-error");
+const productCostError = document.getElementById("product-cost-error");
+const expenditureValue = document.getElementById("expenditure-value");
+const list = document.getElementById("list");
+
+
+
+
+//Function To Disable Edit and Delete Button
+const disableButtons = (bool) => {
+  let editButtons = document.getElementsByClassName("edit");
+  Array.from(editButtons).forEach((element) => {
+    element.disabled = bool;
+  });
+};
+
+//Function To Modify List Elements
+const modifyElement = (element, edit = false) => {
+  let parentDiv = element.parentElement;
+  let currentExpense = expenditureValue.innerText;
+  let parentAmount = parentDiv.querySelector(".amount").innerText;
+  if (edit) {
+    let parentText = parentDiv.querySelector(".product").innerText;
+    productTitle.value = parentText;
+    userAmount.value = parentAmount;
+    disableButtons(true);
+  }
+  
+  expenditureValue.innerText =
+    parseInt(currentExpense) - parseInt(parentAmount);
+  parentDiv.remove();
+};
+
+//Function To Create List
+const listCreator = (expenseName, expenseValue) => {
+  let sublistContent = document.createElement("div");
+  sublistContent.classList.add("sublist-content", "flex-space");
+  list.appendChild(sublistContent);
+  sublistContent.innerHTML = `<p class="product">${expenseName}</p><p class="amount">\$${expenseValue}</p>`;
+  let editButton = document.createElement("button");
+  editButton.classList.add("fa-solid", "fa-pen-to-square", "edit");
+  editButton.style.fontSize = "1.2em";
+  editButton.addEventListener("click", () => {
+    modifyElement(editButton, true);
+  });
+  let deleteButton = document.createElement("button");
+  deleteButton.classList.add("fa-solid", "fa-trash-can", "delete");
+  deleteButton.style.fontSize = "1.2em";
+  deleteButton.addEventListener("click", () => {
+    modifyElement(deleteButton);
+  });
+  sublistContent.appendChild(editButton);
+  sublistContent.appendChild(deleteButton);
+  document.getElementById("list").appendChild(sublistContent);
+};
+
+//Function To Add Expenses
+addExpensesButton.addEventListener("click", () => {
+  
+  if (!userAmount.value || !productTitle.value) {
+    productTitleError.classList.remove("hide");
+    return false;
+  }
+ 
+  disableButtons(false);
+ 
+  let expenditure = parseInt(userAmount.value);
+  
+  let sum = parseInt(expenditureValue.innerText) + expenditure;
+  expenditureValue.innerText = sum;
+  
+  //Create list
+  listCreator(productTitle.value, userAmount.value);
+  //Empty inputs
+  productTitle.value = "";
+  userAmount.value = "";
+});
